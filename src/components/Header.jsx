@@ -1,9 +1,17 @@
-import React from 'react'
+import { Button } from 'react-bootstrap/'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
     return (
-        <div>
-            Header with name / score
+        <div className="header_section">
+            <h2>Battleship Singleplayer</h2>
+            <Button
+                size="lg" 
+                as={Link} 
+                to="/" 
+            >
+                Home
+            </Button>
         </div>
     )
 }

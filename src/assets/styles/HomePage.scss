@@ -1,13 +1,18 @@
 .home_page {
     background-color: #3f2711;
+    color: white;
+    height: 100vh;
     display: flex;
     place-items: center;
     flex-direction: column;
-    height: 100vh;
-    padding-top: 30vh;
+    padding-top: 30px;
 
     h2 {
-        color: white;
+        padding-bottom: 30px;
+    }
+    
+    img {
+        max-inline-size: 25%;
         padding-bottom: 50px;
     }
 }

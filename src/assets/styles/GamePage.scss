@@ -1,0 +1,20 @@
+.game_page {
+    background-color: #3f2711;
+    color: white;
+    height: 100vh;
+
+    .header_section {
+        display: flex;
+        place-items: center;
+        flex-direction: column;
+        padding-bottom: 30px;
+
+        h2 {
+            padding: 20px;
+        }
+    }
+
+    .playfield_section {
+        color: white;
+    }
+}
