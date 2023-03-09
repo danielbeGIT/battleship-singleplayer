@@ -1,4 +1,5 @@
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./assets/styles/App.scss";
 import GamePage from './pages/GamePage';
 import HomePage from './pages/HomePage';
 import { Routes, Route } from 'react-router-dom';

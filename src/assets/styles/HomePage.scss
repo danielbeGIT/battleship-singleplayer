@@ -1,0 +1,13 @@
+.home_page {
+    background-color: #3662a3;
+    display: flex;
+    place-items: center;
+    flex-direction: column;
+    height: 100vh;
+    padding-top: 30vh;
+
+    h2 {
+        color: white;
+        padding-bottom: 50px;
+    }
+}
