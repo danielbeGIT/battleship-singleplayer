@@ -7,43 +7,47 @@
         display: flex;
         place-items: center;
         flex-direction: column;
-        padding-bottom: 30px;
+        padding: 1em 0;
 
-        h2 {
-            padding: 20px;
+        Button {
+            margin: 20px;
         }
+    }
+    .player_score {
+        display: flex;
+        place-items: center;
+        flex-direction: column;
+        font-size: large;
+        padding: 10px;
     }
 
     .playfield_section {
-        color: white;
+        display: flex;
+        justify-content: center;
 
-        .playfield_container {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            padding-top: 10px;
-            padding-right: 35px;
-            padding-bottom:35px;
-            border-radius: 25px;
-            background-color: black;
+        .game_board {
+            .row {
+                display: grid;
+                grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+                height: 40px;
+            }
 
-            .game_board {
-                display: flex;
-                justify-content: center;
-
-                .rows_container {
-                    display: inline;
-                    
-                    .square_container {
-                        width: 4em;
-                        height: 2em;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        background-color: aquamarine;
-                    }
-                }
+            .box {
+                background-color: whitesmoke;
+                opacity: 0.6;
+                border: 1px solid #c0c0c0;
+                padding: 10px;
+                text-align: center;
+                color: #00000095;
+                font-size: 0.7em;
+                font-weight: bolder;
+            
+                &:hover {
+                    opacity: 0.8;
+                    transition: 0.6s;
+                }     
             }
         }
+        
     }
 }

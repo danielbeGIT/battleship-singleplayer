@@ -1,24 +1,59 @@
-import Header from '../components/Header'
-import PlayField from '../components/PlayField'
+// React
+import { useState } from "react"
+import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap/'
+
+// Components
+import MyPlayField from '../components/MyPlayField'
 
 const GamePage = () => {
-    const row = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-    const column = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-    const ref = ["", "A", "B", "C", "D", "F", "G", "H", "I", "J", "K"];
+    const [gameStarted, setGameStarted] = useState(true)
+    const [myTurn, setMyTurn] = useState(true)
+    const [enemyShips, setEnemyShips] = useState(0)
+    const [myShips, setMyShips] = useState(0)
+    const [winner, setWinner] = useState(false)
+    const [loser, setLoser] = useState(false)
+
+    // Handle winner/loser
+    const handleWinner = () => {
+        setWinner(true)
+    }
+    const handleLoser = () => {
+        setLoser(true)
+    }
 
     return (
         <div className="game_page">
-            <Header/>
-            <div className="playfield_section">
-                <div className="startButton">
-                    Start the round
+            <div className="header_section">
+                <h2>Battleship Singleplayer</h2>
+                <div className="header_button">
+                    <Button 
+                        size="lg" 
+                        as={Link} 
+                        to="/"
+                    >
+                        Give up
+                    </Button>
+
+                    <Button 
+                        className="startButton" 
+                        onClick={() => setGameStarted(true) } 
+                        size="lg"
+                    >
+                        Start the game
+                    </Button>
                 </div>
-                <PlayField 
-                    rows={row}
-                    columns={column}
-                    refs={ref}
-                />
             </div>
+            {gameStarted && (
+                <>
+                    <div className="player_score">
+                        Show Player Scores Player & Computer
+                    </div>
+                    <div className="playfield_section">
+                        <MyPlayField />
+                    </div>
+                </>
+            )}
         </div>
     )
 }
