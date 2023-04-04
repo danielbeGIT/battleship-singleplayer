@@ -1,7 +1,7 @@
 import MainImage from '../assets/images/cartoon_battleship.jpg'
 
-import { Button } from 'react-bootstrap/'
-import { Link } from 'react-router-dom'
+import { Button } from "react-bootstrap/"
+import { Link } from "react-router-dom"
 
 const HomePage = () => {
     return (

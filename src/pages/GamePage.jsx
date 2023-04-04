@@ -1,10 +1,11 @@
 // React
 import { useState } from "react"
-import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap/'
+import { Link } from "react-router-dom"
+import { Button } from "react-bootstrap/"
 
 // Components
-import MyPlayField from '../components/MyPlayField'
+import MyPlayField from "../components/MyPlayField"
+import EnemyField from "../components/EnemyField"
 
 const GamePage = () => {
     const [gameStarted, setGameStarted] = useState(true)
@@ -51,6 +52,8 @@ const GamePage = () => {
                     </div>
                     <div className="playfield_section">
                         <MyPlayField />
+
+                        <EnemyField />
                     </div>
                 </>
             )}

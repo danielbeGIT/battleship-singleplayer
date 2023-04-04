@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react"
 
 const MyPlayField = () => {
     return (
-		<div className="game_board">
+		<div className="playfield my_field">
 			<div className='row'>
 				<div id='a1' className="box">A1</div>
 				<div id='a2' className="box">A2</div>
