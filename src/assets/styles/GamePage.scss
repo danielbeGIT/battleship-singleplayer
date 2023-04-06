@@ -29,6 +29,7 @@
             flex-direction: column;
             align-items: center;
             padding: 30px;
+            cursor: pointer;
             
             .row {
                 display: grid;
@@ -40,11 +41,10 @@
                 background-color: whitesmoke;
                 opacity: 0.6;
                 border: 1px solid #c0c0c0;
+                color: transparent;
                 padding: 10px;
                 text-align: center;
-                color: #00000095;
                 font-size: 0.7em;
-                font-weight: bolder;
             
                 &:hover {
                     opacity: 0.8;
@@ -52,8 +52,20 @@
                 }
             }
 
-            .firedBox {
-                opacity: 0.1;
+            .ship {
+                background-color: #00fff28d;
+                border: 1px solid #c0c0c0;
+                color: transparent;
+            }
+
+            .missBox {
+                background-color: red;
+                border: 1px solid #c0c0c0;
+                opacity: 0.8;
+                padding: 10px;
+                text-align: center;
+                font-size: 0.7em;
+                font-weight: bold;
             }
 
             .hitBox {

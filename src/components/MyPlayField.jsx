@@ -1,6 +1,7 @@
 import React from "react"
 
 const MyPlayField = () => {
+	
     return (
 		<div className="playfield my_field">
 			<div className='row'>

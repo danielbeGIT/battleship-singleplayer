@@ -103,11 +103,11 @@ const EnemyField = ({ onClick, myTurn }) => {
 				}} id='ob9' className="box">B9</div>
 				<div 
 					onClick={(e) => {
-						if (myTurn) {
-							onClick(e)
-						}
-					}} 
-					id='ob10' className="box"
+					if (myTurn) {
+						onClick(e)
+					}
+				}} 
+				id='ob10' className="box"
 				>B10</div>
 			</div>
 			<div className='row'>

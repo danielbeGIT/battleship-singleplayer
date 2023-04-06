@@ -16,7 +16,7 @@ const HomePage = () => {
                 as={Link} 
                 to="/gamepage" 
             >
-                Start game
+                Play the game
             </Button>
         </div>
     )
