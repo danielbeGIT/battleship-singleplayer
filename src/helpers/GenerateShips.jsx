@@ -11,9 +11,11 @@ export const getDestroyer = () => {
     if (x === 1) {
         x = x + 1
         nextId = y + x
+        
     } else if (x === 10) {
         x = x - 1
         nextId = y + x
+
     } else if (x > 1 && x < 10) {
         x = x + 1
         nextId = y + x
@@ -34,9 +36,11 @@ export const getSubmarine = () => {
     if (x === 1 ) {
         x = x + 1
         nextId = y + x
+
     } else if (x === 10) {
         x = x - 1
         nextId = y + x
+
     } else if (x > 1 && x < 10) {
         x = x + 1
         nextId = y + x
@@ -60,11 +64,13 @@ export const getCruiser = () => {
         nextId = y + x
         x = x + 1
         thirdId = y + x
+
     } else if (x === 10 || x === 9) {
         x = x - 1
         nextId = y + x
         x = x - 1
         thirdId = y + x
+
     } else if (x > 1 && x < 9) {
         x = x + 1
         nextId = y + x
@@ -93,6 +99,7 @@ export const getBattleship = () => {
         thirdId = y + x
         x = x + 1 
         fourthId = y + x
+
     } else if (x === 10 || x === 9 || x === 8) {
         x = x - 1
         nextId = y + x
@@ -100,6 +107,7 @@ export const getBattleship = () => {
         thirdId = y + x
         x = x - 1 
         fourthId = y + x
+
     } else if (x > 1 && x < 8) {
         x = x + 1
         nextId = y + x

@@ -13,11 +13,30 @@
             margin: 20px;
         }
     }
+
+    .check_turns h1 {
+        display: flex;
+        place-items: center;
+        flex-direction: column;
+        opacity: 0.8;
+        color: wheat;
+        font-weight: bold;
+    }
+
+    .your_turn {
+        background-color: #0000ff7a;
+    }
+
+    .enemy_turn {
+        background-color: #ff000093;
+    }
+
     .player_score {
         display: flex;
         place-items: center;
         flex-direction: column;
         font-size: large;
+        padding-bottom: 10px;
     }
 
     .playfield_section {
@@ -28,7 +47,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 30px;
             cursor: pointer;
             
             .row {
@@ -56,12 +74,15 @@
                 background-color: #00fff28d;
                 border: 1px solid #c0c0c0;
                 color: transparent;
+                padding: 10px;
+                text-align: center;
+                font-size: 0.7em;
+                font-weight: bold;
             }
 
             .missBox {
                 background-color: red;
                 border: 1px solid #c0c0c0;
-                opacity: 0.8;
                 padding: 10px;
                 text-align: center;
                 font-size: 0.7em;
@@ -70,6 +91,7 @@
 
             .hitBox {
                 background-color: greenyellow;
+                color: black;
             }
 
             .enemy_field {

@@ -1,6 +1,6 @@
 // React
-import { useEffect, useState } from "react"
-import { Link, redirect } from "react-router-dom"
+import { useState } from "react"
+import { Link } from "react-router-dom"
 import { Button } from "react-bootstrap/"
 
 // Components
@@ -13,115 +13,133 @@ import {idChecker} from "../helpers/Filter"
 
 const GamePage = () => {
     const [gameButton, setGameButton] = useState()
-    const [gameStarted, setGameStarted] = useState()
-    const [myTurn, setMyTurn] = useState(null)
-    const [enemyLeft, setEnemyLeft] = useState(4)
+    const [gameStarted, setGameStarted] = useState(false)
+    const [myTurn, setMyTurn] = useState(true)
+
     const [shipsLeft, setShipsLeft] = useState(4)
+    const [enemyLeft, setEnemyLeft] = useState(4)
 
     const [winner, setWinner] = useState(false)
-    const [loser, setLoser] = useState(false)
+    const [gameOver, setGameOver] = useState(false)
 
     const handleBoxClick = (e) => {
+        if (gameOver) return
+
         let id = e.target.id;
-        let hit = false
-        const currentBox = document.querySelector(`#${id}`);
-        console.log(id)
 
-        if (!e.target.classList.contains('missBox')) {
-			e.target.classList.add('missBox')
-		}
+        if (!e.target.classList.contains('ship') && !e.target.classList.add('missBox')) {
+            e.target.classList.remove('box')
+            e.target.classList.add('missBox')
+            console.log('Nice try..')
 
-        if (currentBox.classList.contains('ship')) {
-            hit = true
+        } else if (e.target.classList.contains('ship')) {
+            e.target.classList.remove('box')
+            e.target.classList.add('hitBox')
             idChecker(id)
+            console.log('Nice shot!')
 
             const checkIfShipSunk = () => {
-                if (myShips[0].length === 0) {
-                    myShips[0] = false
+                if (enemyShips[0].length === 0) {
+                    enemyShips[0] = false
                 }
 
-                if (myShips[1].length===0) {
-                    myShips[1] = false
+                if (enemyShips[1].length === 0) {
+                    enemyShips[1] = false
                 }
 
-                if (myShips[2].length===0) {
-                    myShips[2] = false
+                if (enemyShips[2].length === 0) {
+                    enemyShips[2] = false
                 }
 
-                if (myShips[3].length===0) {
-                    myShips[3] = false
+                if (enemyShips[3].length === 0) {
+                    enemyShips[3] = false
                 }
             }
             checkIfShipSunk()
-        }
-
-        if (hit) {
-            currentBox.classList.remove('box')
-            currentBox.classList.add('hitBox')
-
-        } else {
-            currentBox.classList.remove('box')
-            currentBox.classList.add('missBox')
-        }
-
-        const myArr = myShips.filter(index => index)
+		}
         const enemyArr = enemyShips.filter(index => index)
 
-        setEnemyLeft(value => value - 1)
-
-        if (myArr.length === 0) {
-            setLoser(true)
-            console.log('You lost!')
-        }
-
         if (enemyArr.length === 0) {
+            setGameOver(true)
             setWinner(true)
             console.log('You won!')
         }
 
         setEnemyLeft(enemyArr.length)
-        setShipsLeft(myArr.length)
-        setMyTurn(prevState => !prevState)
+        setMyTurn(false)
+
         return
     }
 
     const cpuBoxClick = () => {
+        if (gameOver) return
+        
         setTimeout(() => {
             const randomBox = Math.floor(Math.random() * 100) + 1;
             const fieldBox = document.querySelectorAll('.my_field > .row > div')
 
-            if (fieldBox[randomBox].classList.contains('ship')) {
-                fieldBox[randomBox].classList.remove('box')
-                fieldBox[randomBox].classList.add('hitBox')
-                console.log('CPU hit')
-
-            } else if (!fieldBox[randomBox].classList.contains('ship')) {
+            if (!fieldBox[randomBox].classList.contains('ship') && !fieldBox[randomBox].classList.add('missBox')) {
                 fieldBox[randomBox].classList.remove('box')
                 fieldBox[randomBox].classList.add('missBox')
                 console.log('CPU missed')
 
-            } else if (fieldBox[randomBox].classList.contains('hitBox') || fieldBox[randomBox].classList.contains('missBox')) {
-                console.log('try again')
-                cpuBoxClick()
-            }
-        }, 3000)
+            } else if (fieldBox[randomBox].classList.contains('ship')) {
+                fieldBox[randomBox].classList.remove('box')
+                fieldBox[randomBox].classList.add('hitBox')
+                idChecker(fieldBox[randomBox].id)
+                console.log('CPU hit')
 
-        setMyTurn(prevState => !prevState)
+                const checkIfShipSunk = () => {
+                    if (myShips[0].length === 0) {
+                        myShips[0] = false
+                    }
+
+                    if (myShips[1].length === 0) {
+                        myShips[1] = false
+                    }
+
+                    if (myShips[2].length === 0) {
+                        myShips[2] = false
+                    }
+
+                    if (myShips[3].length === 0) {
+                        myShips[3] = false
+                    }
+                }
+                checkIfShipSunk()
+            } else if (fieldBox[randomBox].classList.contains('hitBox') || fieldBox[randomBox].classList.contains('missBox')) {
+                cpuBoxClick()
+                console.log('CPU tries again')
+            }
+            const myArr = myShips.filter(index => index)
+
+            if (myArr.length === 0) {
+                setGameOver(true)
+                setWinner(false)
+                console.log('You lost!')
+            }
+
+            setShipsLeft(myArr.length)
+            setMyTurn(true)
+        }, 2000)
+        
         return
     }
 
     const startGame = () => {
+        setGameOver(false)
         setGameButton(true)
 
         setTimeout(() => {
             let randomTurn = Math.random() < 0.5;
             randomizeShips()
+
             setMyTurn(randomTurn)
-        }, 300)
+        }, 800)
 
         setTimeout(() => {
             setGameButton(false)
-        }, 1000)
+        }, 2000)
 
         setEnemyLeft(4)
         setShipsLeft(4)
@@ -130,7 +148,7 @@ const GamePage = () => {
         return
     }
 
-    if (!myTurn) {
+    if (!myTurn && gameStarted) {
         cpuBoxClick()
     }
 
@@ -161,30 +179,58 @@ const GamePage = () => {
                 </div>
             </div>
 
-            {!gameStarted && <marquee behavior="alternate"><h1>You need to start the game...</h1></marquee>}
+            {!gameStarted ? (
+                <marquee behavior="alternate">
+                    <h1>You need to start the game...</h1>
+                </marquee>
+            ) : (
+                <>
+                    {gameOver &&
+                        <>
+                            {winner ? (
+                                <marquee behavior="alternate">
+                                    <h1>You are the winner!</h1>
+                                </marquee>
+                            ) : (
+                                <marquee behavior="alternate">
+                                    <h1>Too bad.. you lost</h1>
+                                </marquee>
+                            )}
+                        </>
+                    }
 
-            {winner && <marquee behavior="alternate"><h1>You are the winner!</h1></marquee>}
+                    {!gameOver && 
+                        <>
+                            {myTurn ? (
+                                <div className="check_turns your_turn">
+                                    <h1>Your Turn!</h1>
+                                </div>
+                            ) : (
+                                <div className="check_turns enemy_turn">
+                                    <h1>CPUs Turn!</h1>
+                                </div>
+                            )}
+                        </>
+                    }
 
-            {loser && <marquee behavior="alternate"><h1>Too bad.. you lost</h1></marquee>}
-
-            {gameStarted && (
-                <div className="playfield_section">
-                    <div className="myField">
-                        <div className="player_score">
-                            <h2>You</h2>
-                            Ships left: {shipsLeft}
+                    <div className="playfield_section">
+                        <div className="myField">
+                            <div className="player_score">
+                                <h2>You</h2>
+                                Ship(s) left: {shipsLeft}
+                            </div>
+                            <MyPlayField />
                         </div>
-                        <MyPlayField />
-                    </div>
 
-                    <div className="enemyField">
-                        <div className="player_score">
-                            <h2>Computer</h2>
-                            Ships left: {enemyLeft}
+                        <div className="enemyField">
+                            <div className="player_score">
+                                <h2>CPU</h2>
+                                Ship(s) left: {enemyLeft}
+                            </div>
+                            <EnemyField onClick={handleBoxClick} myTurn={myTurn}/>
                         </div>
-                        <EnemyField onClick={handleBoxClick} myTurn={myTurn}/>
                     </div>
-                </div>
+                </>
             )}
         </div>
     )
