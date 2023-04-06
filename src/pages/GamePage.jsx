@@ -36,6 +36,7 @@ const GamePage = () => {
             e.target.classList.remove('box')
             e.target.classList.add('hitBox')
             idChecker(id)
+
             console.log('Nice shot!')
 
             const checkIfShipSunk = () => {
@@ -132,9 +133,9 @@ const GamePage = () => {
 
         setTimeout(() => {
             let randomTurn = Math.random() < 0.5;
-            randomizeShips()
-
             setMyTurn(randomTurn)
+            
+            randomizeShips()
         }, 800)
 
         setTimeout(() => {
