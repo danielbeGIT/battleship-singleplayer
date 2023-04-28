@@ -1,5 +1,5 @@
 .game_page {
-    background-color: #3f2711;
+    background-color: #0f3d3b;
     color: white;
     height: 100vh;
 
@@ -27,15 +27,15 @@
     }
 
     .winner {
-        background-color: goldenrod;
+        background-color: #beb207;
     }
 
     .your_turn {
-        background-color: #0000ff7a;
+        background-color: #079e0e7a;
     }
 
     .enemy_turn {
-        background-color: #ff000093;
+        background-color: #b6030393;
     }
 
     .playfield_section {
@@ -56,10 +56,10 @@
             }
 
             .Box {
-                background-color: #396161;
-                border: 1px solid #2c3333;
+                background-color: #518a8a;
+                border: 1px solid #212727;
                 color: transparent;
-                opacity: 0.8;
+                opacity: 0.9;
                 font-size: 1rem;
                 font-weight: bolder;
                 width: 2.5rem;
@@ -68,24 +68,24 @@
                 text-align: center;
             
                 &:hover {
-                    background-color: #b3a818;
-                    opacity: 0.6;
+                    background-color: #c5b913;
+                    opacity: 0.7;
                     transition: 0.6s;
                 }
             }
 
             .ship {
-                background-color: #0305a7e5;
+                background-color: #3f40b1e5;
                 color: transparent;
             }
 
             .missBox {
-                background-color: red;
+                background-color: #c41414;
                 color: black;
             }
 
             .hitBox {
-                background-color: greenyellow;
+                background-color: #00b100;
                 color: black;
             }
         }
