@@ -19,13 +19,11 @@
         }
     }
 
-    .check_turns h1 {
+    .results h1 {
         display: flex;
-        place-items: center;
-        flex-direction: column;
-        opacity: 0.8;
-        color: wheat;
-        font-weight: bold;
+        justify-content: center;
+        font-weight: bolder;
+        padding: 20px;
     }
 
     .your_turn {
@@ -53,42 +51,40 @@
             flex-direction: column;
             align-items: center;
 
+            h2 {
+                font-weight: bolder;
+            }
+
             .Grid {
                 display: flex;
             }
 
             .Box {
-                background-color: whitesmoke;
-                opacity: 0.6;
-                border: 1px solid #c0c0c0;
+                background-color: #2e4f4f;
+                border: 1px solid #2c3333;
                 color: transparent;
-                padding: 17px;
+                opacity: 0.8;
+                font-size: 1rem;
+                font-weight: bolder;
+                width: 2.5rem;
+                height: 2.5rem;
+                cursor: pointer;
                 text-align: center;
-                font-size: 0.7em;
             
                 &:hover {
-                    opacity: 0.8;
+                    opacity: 0.5;
                     transition: 0.6s;
                 }
             }
 
             .ship {
                 background-color: #00fff28d;
-                border: 1px solid #c0c0c0;
                 color: transparent;
-                padding: 17px;
-                text-align: center;
-                font-size: 0.7em;
-                font-weight: bold;
             }
 
             .missBox {
                 background-color: red;
-                border: 1px solid #c0c0c0;
-                padding: 17px;
-                text-align: center;
-                font-size: 0.7em;
-                font-weight: bold;
+                color: black;
             }
 
             .hitBox {
