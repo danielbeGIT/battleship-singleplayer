@@ -1,132 +1,97 @@
 // React
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 // Helpers
-import { Box } from "../helpers/Boxes";
-import { getRandomIntInclusive } from "../helpers/RandomInt";
+import { Box } from "../helpers/Boxes"
+import { buildMap, getNewCoord, getCoordName, getTotalShips } from "../helpers/RandomInt"
+
+// Imports
+import cloneDeep from "lodash.clonedeep"
 
 // Grid size
-const gridAmount = 10;
-
-// Randomize using random int
-const getRandomCoords = (min, max) => {
-    const randomX = getRandomIntInclusive(min, max);
-    const randomY = getRandomIntInclusive(min, max);
-    
-    return [randomX, randomY];
-};
-
-// Build the field
-const buildMap = (dimension) => {
-    const ships = [4, 3, 2, 2]; // width in blocks
-    const gridMap = Array.from(Array(dimension), () => new Array(dimension));
-
-    ships.forEach((val) => {
-    let good = false;
-
-        while (!good) {
-            const [randomX, randomY] = getRandomCoords(0, gridAmount - 1);
-            if (gridAmount - randomX >= val) {
-            
-                // Check if grid contains ship
-                const containsExisting = () => {
-                    return Array.from(new Array(val)).find((_val, index) => {
-                        return !!gridMap[randomY][randomX + index];
-                    });
-                };
-
-                // Add ship to grid 
-                const addShip = () => {
-                    return Array.from(new Array(val)).forEach((_val, index) => {
-                        return (gridMap[randomY][randomX + index] = "s");
-                    });
-                };
-
-                // Don't add ship if contains ship
-                if (!containsExisting()) {
-                    addShip();
-                    good = true;
-                }
-            }
-        }
-    });
-
-    return gridMap;
-};
+const GRID_AMOUNT = 10
 
 export const Grid = ({
-    isYourTurn,
     playerName,
     onBoxClickCallback,
-    turn,
-    isPlayer,
     incrementTurn,
-    hideShips,
+    hideCPUShips,
+    isPlayersTurn,
+    playerNumber,
+    cpuTarget,
+    setLosers,
+    disabled,
+    isPlayer
 }) => {
+    const [gridMap, setGridMap] = useState(() => buildMap(GRID_AMOUNT))
+    const [clickedShip, setClickedShip] = useState(0)
+
     useEffect(() => {
-        if (isPlayer && !isYourTurn()) {
-            setTimeout(CPUTurn, 1000);
+        if (playerNumber === cpuTarget.target) {
+            CPUTurn()
         }
-    }, [turn]);
+    }, [cpuTarget])
 
-    const [gridMap, setGridMap] = useState(() => buildMap(gridAmount));
-    const [shipsLeft, setShipsLeft] = useState(4)
-
-    // when cputurn, cpu random fire shots
     const CPUTurn = () => {
-        let isNewPos = false;
+        setTimeout(() => {
+            getNewCoord(GRID_AMOUNT, gridMap, (x, y) => {
+                updateGridMap(x, y)
+                incrementTurn()
+            })
+        }, 1000)
+    }
 
-        while (!isNewPos) {
-            const [x, y] = getRandomCoords(0, gridAmount - 1);
-
-            if (!gridMap[y][x]) {
-                isNewPos = [x, y];
-            }
-        }
-        const [x, y] = isNewPos;
-
-        updateGridMap(x, y);
-        incrementTurn();
-        return isNewPos;
-    };
-
-    // update the field
     const updateGridMap = (x, y) => {
         setGridMap((prevState) => {
-            const newGridMap = [...prevState];
-            newGridMap[y][x] = "x";
+            const newGridMap = cloneDeep(prevState)
 
-            return newGridMap;
-        });
-    };
+            if (newGridMap[y][x] === "s")
 
-    // handle box clicks
+            setClickedShip((prevState) => prevState + 1)
+
+            newGridMap[y][x] = newGridMap[y][x] === "s" ? "hit" : "x"
+
+            return newGridMap
+        })
+    }
+
     const onBoxClick = (x, y) => {
-        if (isYourTurn() && !isPlayer) {
-            updateGridMap(x, y);
-            onBoxClickCallback();
+        if (isPlayersTurn() && playerNumber !== 0 && gridMap[y][x] !== "x" && gridMap[y][x] !== "hit") {
+            // Players own grid is unclickable
+            updateGridMap(x, y)
+            onBoxClickCallback()
         }
-    };
+    }
+
+    useEffect(() => {
+        if (clickedShip === getTotalShips()) {
+            setLosers((prevState) => [...prevState, playerName])
+        }
+    }, [clickedShip])
+
+    const handleShowShip = (type) => {
+        if (hideCPUShips && !isPlayer) return false
+        return type === "s"
+    }
 
     return (
         <div className="playfield">
-            <div className="player_score">
-                <h2>{playerName}</h2>
-                Ship(s) left: {shipsLeft}
-            </div>
-            {gridMap.map((val, y) => {
-                return (
-                    <div className="Grid">
-                        {[...val].map((text, x) => (
-                            <Box
-                                selected={text === "x"}
-                                isShip={!hideShips && text === "s"}
-                                onClick={() => onBoxClick(x, y)}
-                            />
-                        ))}
-                    </div>
-                );
-            })}
+            <h2>{playerName}</h2>
+            {gridMap.map((val, y) => (
+                <div className="Grid" key={`grid-${y}`}>
+                    {[...val].map((type, x) => (
+                        <Box
+                            key={`box-${x}`}
+                            selected={type === "x"}
+                            isShip={handleShowShip(type)}
+                            isHit={type === "hit"}
+                            onClick={() => onBoxClick(x, y)}
+                            text={getCoordName(gridMap, x, y)}
+                            disabled={disabled}
+                        />
+                    ))}
+                </div>
+            ))}
         </div>
-    );
-};
+    )
+}
